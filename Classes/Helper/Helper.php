@@ -2,6 +2,7 @@
 
 namespace EHAERER\PasteReference\Helper;
 
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\Exception;
 use TYPO3\CMS\Core\Database\Connection;
@@ -110,7 +111,7 @@ class Helper implements SingletonInterface
     /**
      * Gets the current backend user.
      *
-     * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+     * @return BackendUserAuthentication
      */
     public function getBackendUser()
     {

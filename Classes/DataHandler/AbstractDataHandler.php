@@ -149,39 +149,30 @@ abstract class AbstractDataHandler
 
         if (Helper::getInstance()->isTypo3OlderThen10()) {
             $constraints = [
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq(
-                        'pid',
-                        $queryBuilder->createNamedParameter(-1, \PDO::PARAM_INT)
-                    ),
-                    $queryBuilder->expr()->eq(
-                        't3ver_wsid',
-                        $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
-                    ),
-                    $queryBuilder->expr()->gt(
-                        't3ver_id',
-                        $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
-                    )
-                ),
+                $queryBuilder->expr()->and($queryBuilder->expr()->eq(
+                    'pid',
+                    $queryBuilder->createNamedParameter(-1, \PDO::PARAM_INT)
+                ), $queryBuilder->expr()->eq(
+                    't3ver_wsid',
+                    $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
+                ), $queryBuilder->expr()->gt(
+                    't3ver_id',
+                    $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
+                )),
             ];
         } else {
             $constraints = [
-                $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq(
-                        'pid',
-                        $queryBuilder->createNamedParameter(-1, \PDO::PARAM_INT)
-                    ),
-                    $queryBuilder->expr()->eq(
-                        't3ver_wsid',
-                        $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
-                    )
-                ),
+                $queryBuilder->expr()->and($queryBuilder->expr()->eq(
+                    'pid',
+                    $queryBuilder->createNamedParameter(-1, \PDO::PARAM_INT)
+                ), $queryBuilder->expr()->eq(
+                    't3ver_wsid',
+                    $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
+                )),
             ];
         }
 
-        $queryBuilder->delete('tt_content')
-            ->where(...$constraints)
-            ->execute();
+        $queryBuilder->delete('tt_content')->where(...$constraints)->executeStatement();
     }
 
     /**
